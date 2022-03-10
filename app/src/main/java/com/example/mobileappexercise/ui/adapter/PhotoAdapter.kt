@@ -2,15 +2,14 @@ package com.example.mobileappexercise.ui.adapter
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.mobileappexercise.databinding.ItemPhotoBinding
 import com.example.mobileappexercise.data.Photo
+import com.example.mobileappexercise.databinding.ItemPhotoBinding
 import com.example.mobileappexercise.util.PAGE_SIZE
 import javax.inject.Inject
 
