@@ -42,6 +42,7 @@ class MainViewModel @Inject constructor(
         _searchTerm = text
         _loadingStatus.value = LoadingStatus.LOADING
 
+        job?.cancel()
         job = viewModelScope.launch {
             val response = flickrRepository.fetchFlickrPhotos(text, (_currentPage + 1))
 
@@ -49,7 +50,7 @@ class MainViewModel @Inject constructor(
                 response.body()?.let { flickrResponse ->
                     if (flickrResponse.stat.equals("ok", ignoreCase = true) && flickrResponse.photos != null) {
                         _photoList.value!!.addAll(flickrResponse.photos!!.photo)
-                        _photoList.value = _photoList.value
+                        _photoList.value = ArrayList(_photoList.value!!.distinct())
                         _currentPage += 1
                         _loadingStatus.value = LoadingStatus.SUCCESS
 
@@ -58,7 +59,7 @@ class MainViewModel @Inject constructor(
                 }
             }
 
-            _photoList.value = arrayListOf()
+            _photoList.value = ArrayList()
             _loadingStatus.value = LoadingStatus.FAIL
         }
     }
@@ -73,7 +74,7 @@ class MainViewModel @Inject constructor(
         job?.cancel()
 
         _searchTerm = ""
-        _photoList.value = arrayListOf()
+        _photoList.value = ArrayList()
         _currentPage = 0
         _loadingStatus.value = LoadingStatus.SUCCESS
     }

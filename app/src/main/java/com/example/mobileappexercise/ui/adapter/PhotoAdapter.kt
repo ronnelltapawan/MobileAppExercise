@@ -31,19 +31,21 @@ class PhotoAdapter @Inject constructor(
         // when the adapter decides to load the
         // second to the last item of the current list
         // also, the items must be greater than the initial size first
-        if (itemCount >= PAGE_SIZE && position > (itemCount - 2)) {
+        if (((itemCount + 1) >= PAGE_SIZE) && (position > (itemCount - 2))) {
             customCallback.onLoadMore()
         }
     }
 
-    inner class PhotoViewHolder(private val itemBinding: ItemPhotoBinding) :
-        RecyclerView.ViewHolder(itemBinding.root) {
+    inner class PhotoViewHolder(private val itemBinding: ItemPhotoBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(photo: Photo) {
-            itemBinding.imgPhoto
-                .load("https://farm${photo.farm}.static.flickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg") {
+            with(itemBinding) {
+                txtTitle.text = "${photo.id}\n${photo.secret}"
+                imgPhoto.load("https://farm${photo.farm}.static.flickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg") {
                     crossfade(true)
                     placeholder(ColorDrawable(Color.GRAY))
+                    error(ColorDrawable(Color.RED))
                 }
+            }
         }
     }
 
